@@ -1,13 +1,25 @@
 ---
 layout: default
-title: Your New Jekyll Site
+title: Renaissance to Rococo
+date: 02-12-2014
+description: A Journey in European Architecture
 ---
 
+{% include head.html %}
+
+
 <div id="home">
-  <h1>Blog Posts</h1>
+  <h1>{{ page.title }}</h1>
+  <h3>{{page.description}}</h3>
   <ul class="posts">
     {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    <li>
+      <div class="deets" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+          <h1><a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a></h1>
+          <p class="date"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %d, %Y" }}</time></p>
+          <p class="">{% if post.description %}{{ post.description  | strip_html | strip_newlines | truncate: 120 }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 120 }}{% endif %}</p>
+      </div>
+    </li>
     {% endfor %}
   </ul>
 </div>
